@@ -1,0 +1,5 @@
+addI 0,5,3#@@@@@@@@@@
+addi 3,0,1
+#sdfdfdfd
+aDdi 4,5,1
+JAlr 6,4#tobi pizda
