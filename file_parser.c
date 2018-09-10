@@ -15,28 +15,21 @@ void ready_to_run(char *text, int size, instruction *program) {
         cnt++;
     }
 }
-void read_file(FILE *in, char *str, int *length) {
-    int symbol=0;
-    while(!feof(in)&&symbol!='\n'){
-        symbol=fgetc(in);
-        *length+=1;
-    }
-    str=(char*)malloc((unsigned int)length * sizeof(char));
-    fseek(in, 0, SEEK_CUR-*length);
-    fgets(str, *length, in);
-    for(int i=0; i<*length; i++)
+void read_file(FILE *in, char *str, int length) {
+    fgets(str, length, in);
+    for(int i=0; i<length; i++)
         printf("%c", str[i]);
-    fgetc(in);
+    printf("length= %d\n", length);
 }
-/*int file_size(FILE *in){
-    int cnt=0;
-    while(!feof(in)) {
-        fgetc(in);
+int str_size(FILE *in){
+    int cnt=0, symbol=0;
+    while(symbol!=EOF&&symbol!='\n') {
+        symbol=fgetc(in);
         cnt++;
     }
-    fseek(in, 0, SEEK_SET);
+    fseek(in, 0, SEEK_CUR-cnt);
     return cnt;
-}*/
+}
 void clear_text(char *text, int length) {
     char *allowed_symbols = ("abdeijlnrsuw0123456789,-# ");
     int k=0;
@@ -60,11 +53,12 @@ void clear_text(char *text, int length) {
 }
 void parse_file(FILE *in, instruction *program) {
     //int size=file_size(in);
-    char *str=malloc(0);
+    char *str;
     int length;
     while(!feof(in)) {
-        length=0;
-        read_file(in, str, &length);
+        length=str_size(in);
+        str=(char*)malloc(length*sizeof(char));
+        read_file(in, str, length);
         free(str);
         //for(int i=0; i<length; i++)
             //printf("%c a", str[i]);
