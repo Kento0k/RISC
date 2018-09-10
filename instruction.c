@@ -1,6 +1,6 @@
 #include"RISCEmulatorLibrary.h"
-typedef struct{
+struct instruction{
     int name;
     int arguments[3];
-}instruction;
+};
 
