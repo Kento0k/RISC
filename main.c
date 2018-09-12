@@ -32,7 +32,15 @@ int main(int argc, char *argv[]){
             error_processing(20);
         }
         else{
-            exec_program(in,out, reg, memory);
+            if(argc==3) {
+                exec_program(in, out, reg, memory);
+            }
+            else if(argc==4){
+                if(strcmp(argv[3], "[debug]")==0)
+                    debug_program(in,out, reg, memory);
+                else
+                    error_processing(30);
+            }
         }
         fclose(in);
         fclose(out);

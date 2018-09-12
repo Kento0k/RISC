@@ -2,8 +2,8 @@
 
 all: final.exe
 
-final.exe : main.o errors.o file_parser.o instruction.o run.o execute.o
-	gcc -o final main.o errors.o file_parser.o instruction.o run.o execute.o
+final.exe : main.o errors.o file_parser.o instruction.o run.o execute.o debug.o
+	gcc -o final main.o errors.o file_parser.o instruction.o run.o execute.o debug.o
 
 main.o : main.c
 	gcc -std=c11 -pedantic -Wall -Wextra -c -o main.o main.c
@@ -19,6 +19,9 @@ instruction.o : instruction.c
 
 run.o : run.c   
 	gcc -std=c11 -pedantic -Wall -Wextra -c -o run.o run.c
+
+debug.o : debug.c   
+	gcc -std=c11 -pedantic -Wall -Wextra -c -o debug.o debug.c
 
 execute.o : execute.c   
 	gcc -std=c11 -pedantic -Wall -Wextra -c -o execute.o execute.c

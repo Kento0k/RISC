@@ -22,6 +22,8 @@ void text_parameters(FILE* in, int *maxPC, int *num_of_commands);
 //program execution
 void exec_program(FILE *in, FILE *out, int *reg, int *memory);
 
+//program_debugging
+void debug_program(FILE *in, FILE *out, int *reg, int *memory);
 //operations
 void run_instruction(instruction step, int*reg, int*memory, int *PC, int maxPC);
 #endif //RISC_RISCEMULATORLIBRARY_H
