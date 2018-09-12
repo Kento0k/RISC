@@ -27,12 +27,15 @@ int main(int argc, char *argv[]){
     }
     else{
         in=fopen(argv[1], "r");
+        out=fopen(argv[2], "w");
         if(in==NULL){
             error_processing(20);
         }
         else{
-            exec_program(in, reg, memory);
+            exec_program(in,out, reg, memory);
         }
+        fclose(in);
+        fclose(out);
     }
     return 0;
 }

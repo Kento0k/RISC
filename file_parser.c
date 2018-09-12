@@ -1,7 +1,7 @@
 #include "RISCEmulatorLibrary.h"
 #include "instruction.c"
 void clear_text(char *text, int length) {
-    char *allowed_symbols = ("abdeijlnrsuw0123456789,-# ");
+    char *allowed_symbols = ("abdeijlnqrsuw0123456789,-# ");
     int k=0;
     while(k<length) {
         if (text[k] == '#') {
@@ -71,9 +71,9 @@ int parse_file(FILE *in, char *name, int *args) {
             argcnt++;
         }
     }
-    printf("\n");
+    //printf("\n");
     free(str);
-    return 0;
+    return 1;
 }
 void text_parameters(FILE* in, int *maxPC, int *num_of_commands){
     int symbol;
