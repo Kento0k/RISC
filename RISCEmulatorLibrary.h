@@ -15,10 +15,13 @@ typedef struct instruction instruction;
 void error_processing(int code);
 
 //File parsing functions
-void parse_file(FILE *in, instruction *program);
+int parse_file(FILE *in, instruction program);
+void text_parameters(FILE* in, int *maxPC, int *num_of_commands);
 
 
-//instruction structure
-struct instruction;
-typedef struct instruction instruction;
+//program execution
+void exec_program(FILE *in, int *reg, int *memory);
+
+//operations
+void run_instruction(instruction step, int*reg, int*memory);
 #endif //RISC_RISCEMULATORLIBRARY_H

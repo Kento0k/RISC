@@ -4,7 +4,6 @@ int main(int argc, char *argv[]){
     FILE *in, *out;
     int reg[8]= {0};
     int memory[2048]= {0};
-    instruction *program=(instruction*)malloc(0);
     if(argc<3 || argc>4) {
         printf("############################################################\n");
         printf("#                                                          #\n");
@@ -32,7 +31,7 @@ int main(int argc, char *argv[]){
             error_processing(20);
         }
         else{
-            parse_file(in, program);
+            exec_program(in, reg, memory);
         }
     }
     return 0;
