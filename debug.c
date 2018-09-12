@@ -14,12 +14,15 @@ void debug_program(FILE *in, FILE *out, int *reg, int *memory){
             program[command_count].adress=i;
         command_count++;
     }
+    //Пока не дошли до конца программы
     while(PC[0]<=maxPC) {
         scanf("%s", command);
         if (strcmp("1", command) != 0 && strcmp("2", command) != 0) {
             printf("Wrong command\n");
             continue;
-        } else if (strcmp("1", command) == 0) {
+        }
+        //Делаем один шаг
+        else if (strcmp("1", command) == 0) {
             while (flag[PC[0]] != 1)
                 PC[0]++;
             run_instruction(program[PC[0]], reg, memory, PC, maxPC);
@@ -28,7 +31,9 @@ void debug_program(FILE *in, FILE *out, int *reg, int *memory){
                 printf("register[%d]= %d \n", z, reg[z]);
             printf("\n");
             PC[0]++;
-        } else if(strcmp("2", command) == 0){
+        }
+        //Завершаем до конца
+        else if(strcmp("2", command) == 0){
             while(PC[0]<=maxPC){
                 while (flag[PC[0]] != 1)
                     PC[0]++;

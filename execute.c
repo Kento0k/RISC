@@ -4,18 +4,20 @@ void exec_program(FILE *in, FILE *out, int *reg, int *memory){
     int maxPC=0, num_of_commands=0, command_count=0, PC[1];
     PC[0]=0;
     text_parameters(in, &maxPC, &num_of_commands);
+    //Создаем массив команд
     instruction *program= (instruction*)malloc(num_of_commands * sizeof(instruction));
     int flag[num_of_commands];
+    //Заполняем массив команд, присваиваем командам параметры
     for(int i=0; i<=maxPC; i++) {
         flag[i]= parse_file(in, program[command_count].name, program[command_count].args);
         if(flag[i]==1)
             program[command_count].adress=i;
         command_count++;
     }
+    //Выполняем программу
        while(PC[0]<=maxPC) {
            if(flag[PC[0]]!=0) {
                run_instruction(program[PC[0]], reg, memory, PC, maxPC);
-               printf("\n");
            }
            PC[0]++;
        }

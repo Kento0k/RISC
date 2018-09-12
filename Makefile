@@ -1,9 +1,9 @@
 .PHONY: all clean
 
-all: final.exe
+all: RISC.exe
 
-final.exe : main.o errors.o file_parser.o instruction.o run.o execute.o debug.o
-	gcc -o final main.o errors.o file_parser.o instruction.o run.o execute.o debug.o
+RISC.exe : main.o errors.o file_parser.o instruction.o run.o execute.o debug.o
+	gcc -o RISC main.o errors.o file_parser.o instruction.o run.o execute.o debug.o
 
 main.o : main.c
 	gcc -std=c11 -pedantic -Wall -Wextra -c -o main.o main.c
