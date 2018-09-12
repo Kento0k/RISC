@@ -33,7 +33,10 @@ void error_processing(int code){
        printf("Unacceptable register\n");
    }
    else if (code==110){
-       printf("Memory overflow\n");
+       printf("Unacceptable immediate\n");
+   }
+   else if (code==120){
+       printf("Out of bounds memory\n");
    }
    printf("Press any button...\n");
    getchar();

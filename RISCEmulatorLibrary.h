@@ -15,7 +15,7 @@ typedef struct instruction instruction;
 void error_processing(int code);
 
 //File parsing functions
-int parse_file(FILE *in, instruction program);
+int parse_file(FILE *in, char *name, int *args);
 void text_parameters(FILE* in, int *maxPC, int *num_of_commands);
 
 

@@ -21,7 +21,7 @@ void clear_text(char *text, int length) {
         k++;
     }
 }
-int parse_file(FILE *in, instruction program) {
+int parse_file(FILE *in, char *name, int *args) {
     const char *command[8];
     command[0] = "addi";
     command[1] = "nand";
@@ -47,27 +47,27 @@ int parse_file(FILE *in, instruction program) {
         return 0;
     }
     str[strlen-1]='\0';
-    for(int i=0; i<strlen; i++)
-        printf("%c", str[i]);
-    printf("\n");
+    //for(int i=0; i<strlen; i++)
+       // printf("%c", str[i]);
+   // printf("\n");
     char *oper=strtok(str, " ,");
-    strcpy(program.name, oper);
+    strcpy(name, oper);
     for(int i=0; i<8; i++){
-       if (strcmp(program.name, command[i])==0)
+       if (strcmp(name, command[i])==0)
            flag=1;
     }
     if(flag==0)
         error_processing(70);
-    for(int i=0; i<5; i++)
-        printf("%c",program.name[i]);
+   // for(int i=0; i<5; i++)
+       // printf("%c",name[i]);
 
     while(oper!=NULL){
         oper=strtok(NULL, ",");
         if(oper!=NULL) {
             if(argcnt==3)
                 error_processing(70);
-            program.arguments[argcnt] = atoi(oper);
-            printf("arg[%d]= %d\n", argcnt, program.arguments[argcnt]);
+            args[argcnt] = atoi(oper);
+            //printf("arg[%d]= %d\n", argcnt, program.args[argcnt]);
             argcnt++;
         }
     }

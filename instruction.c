@@ -1,7 +1,7 @@
 #include"RISCEmulatorLibrary.h"
 struct instruction{
-    int arguments[3];
-    int line_number;
+    int args[3];
+    int adress;
     char name[6];
 };
 
