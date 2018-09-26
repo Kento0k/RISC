@@ -36,7 +36,6 @@ int main(int argc, char *argv[]){
         }
         else{
             if(argc==3) {
-                printf("in\n");
                 exec_program(in, out, reg, memory);
             }
             else if(argc==4){

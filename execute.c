@@ -2,7 +2,6 @@
 #include"instruction.c"
 void exec_program(FILE *in, FILE *out, int *reg, int memory[1024][16]){
     int maxLine=0, num_of_commands=0, command_count=0, line[1], address=1;
-    printf("in");
     line[0]=0;
     text_parameters(in, &maxLine, &num_of_commands);
     //Создаем массив команд
@@ -13,13 +12,14 @@ void exec_program(FILE *in, FILE *out, int *reg, int memory[1024][16]){
         flag[i]= parse_file(in, program[command_count].name, program[command_count].args);
         if(flag[i]==1) {
             program[command_count].adress = address;
+            memory_write(memory, program[command_count]);
             address++;
         }
         command_count++;
     }
-    for(int i=0; i<8;i++){
+    for(int i=0; i<10;i++){
         for(int k=0; k<16; k++)
-            printf("e %d", memory[i][k]);
+            printf("%d", memory[i][k]);
         printf("\n");
     }
     //Выполняем программу

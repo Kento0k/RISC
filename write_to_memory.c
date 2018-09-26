@@ -1,7 +1,6 @@
 #include "RISCEmulatorLibrary.h"
 #include "instruction.c"
 void memory_write(int memory[1024][16], instruction step){
-    printf("in\n");
     int address=step.adress;
     int memcnt;
     //reg[a]= reg[b]+reg[c]
@@ -31,7 +30,7 @@ void memory_write(int memory[1024][16], instruction step){
             memory[address][i] = 0;
         memcnt=15;
         while(regC!=0){
-            memory[address][memcnt]=regA%2;
+            memory[address][memcnt]=regC%2;
             regC/=2;
             memcnt--;
         }
@@ -62,10 +61,11 @@ void memory_write(int memory[1024][16], instruction step){
         }
         if(imm<0){
             memory[address][9]=1;
+            imm=-imm;
         }
         memcnt=15;
         while(imm!=0){
-            memory[address][memcnt]=regA%2;
+            memory[address][memcnt]=imm%2;
             imm/=2;
             memcnt--;
         }
@@ -97,7 +97,7 @@ void memory_write(int memory[1024][16], instruction step){
             memory[address][i] = 0;
         memcnt=15;
         while(regC!=0){
-            memory[address][memcnt]=regA%2;
+            memory[address][memcnt]=regC%2;
             regC/=2;
             memcnt--;
         }
@@ -153,10 +153,11 @@ void memory_write(int memory[1024][16], instruction step){
         }
         if(imm<0){
             memory[address][9]=1;
+            imm=-imm;
         }
         memcnt=15;
         while(imm!=0){
-            memory[address][memcnt]=regA%2;
+            memory[address][memcnt]=imm%2;
             imm/=2;
             memcnt--;
         }
@@ -190,10 +191,11 @@ void memory_write(int memory[1024][16], instruction step){
         }
         if(imm<0){
             memory[address][9]=1;
+            imm=-imm;
         }
         memcnt=15;
         while(imm!=0){
-            memory[address][memcnt]=regA%2;
+            memory[address][memcnt]=imm%2;
             imm/=2;
             memcnt--;
         }
@@ -224,10 +226,11 @@ void memory_write(int memory[1024][16], instruction step){
         }
         if(imm<0){
             memory[address][9]=1;
+            imm=-imm;
         }
         memcnt=15;
         while(imm!=0){
-            memory[address][memcnt]=regA%2;
+            memory[address][memcnt]=imm%2;
             imm/=2;
             memcnt--;
         }
@@ -241,6 +244,18 @@ void memory_write(int memory[1024][16], instruction step){
         memory[address][0]=1;
         memory[address][1]=1;
         memory[address][2]=1;
+        memcnt=5;
+        while(regA!=0){
+            memory[address][memcnt]=regA%2;
+            regA/=2;
+            memcnt--;
+        }
+        memcnt=8;
+        while(regB!=0){
+            memory[address][memcnt]=regB%2;
+            regB/=2;
+            memcnt--;
+        }
     }
 
 }
