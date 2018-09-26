@@ -3,6 +3,8 @@
 void memory_write(int memory[4096][16], instruction step){
     int address=step.adress;
     int memcnt;
+    int neg=0;
+    int carry=0;
     //reg[a]= reg[b]+reg[c]
     if(strcmp(step.name, "add")==0){
         if(step.args[0]<0||step.args[0]>7||step.args[1]<0||step.args[1]>7||step.args[2]<0||step.args[2]>7)
@@ -62,6 +64,7 @@ void memory_write(int memory[4096][16], instruction step){
         if(imm<0){
             memory[address][9]=1;
             imm=-imm;
+            neg=1;
         }
         memcnt=15;
         while(imm!=0){
@@ -69,7 +72,31 @@ void memory_write(int memory[4096][16], instruction step){
             imm/=2;
             memcnt--;
         }
-
+        if(neg==1) {
+            memcnt = 15;
+            for(int i=memcnt; i>9; i--){
+                if(memory[address][i]==0)
+                    memory[address][i]=1;
+                else
+                    memory[address][i]=0;
+            }
+            memcnt=15;
+            memory[address][memcnt] += 1;
+            if (memory[address][memcnt] == 2) {
+                memory[address][memcnt] = 0;
+                carry++;
+            }
+            memcnt--;
+            while (carry != 0 && memcnt != 9) {
+                memory[address][memcnt] += carry;
+                if (memory[address][memcnt] == 2) {
+                    memory[address][memcnt] = 0;
+                    carry = 1;
+                    memcnt--;
+                } else
+                    carry = 0;
+            }
+        }
     }
         //reg[a]=~(reg[a]&reg[b])
     else if(strcmp(step.name, "nand")==0){
@@ -154,12 +181,38 @@ void memory_write(int memory[4096][16], instruction step){
         if(imm<0){
             memory[address][9]=1;
             imm=-imm;
+            neg=1;
         }
         memcnt=15;
         while(imm!=0){
             memory[address][memcnt]=imm%2;
             imm/=2;
             memcnt--;
+        }
+        if(neg==1) {
+            memcnt = 15;
+            for(int i=memcnt; i>9; i--){
+                if(memory[address][i]==0)
+                    memory[address][i]=1;
+                else
+                    memory[address][i]=0;
+            }
+            memcnt=15;
+            memory[address][memcnt] += 1;
+            if (memory[address][memcnt] == 2) {
+                memory[address][memcnt] = 0;
+                carry++;
+            }
+            memcnt--;
+            while (carry != 0 && memcnt != 9) {
+                memory[address][memcnt] += carry;
+                if (memory[address][memcnt] == 2) {
+                    memory[address][memcnt] = 0;
+                    carry = 1;
+                    memcnt--;
+                } else
+                    carry = 0;
+            }
         }
 
     }
@@ -192,12 +245,38 @@ void memory_write(int memory[4096][16], instruction step){
         if(imm<0){
             memory[address][9]=1;
             imm=-imm;
+            neg=1;
         }
         memcnt=15;
         while(imm!=0){
             memory[address][memcnt]=imm%2;
             imm/=2;
             memcnt--;
+        }
+        if(neg==1) {
+            memcnt = 15;
+            for(int i=memcnt; i>9; i--){
+                if(memory[address][i]==0)
+                    memory[address][i]=1;
+                else
+                    memory[address][i]=0;
+            }
+            memcnt=15;
+            memory[address][memcnt] += 1;
+            if (memory[address][memcnt] == 2) {
+                memory[address][memcnt] = 0;
+                carry++;
+            }
+            memcnt--;
+            while (carry != 0 && memcnt != 9) {
+                memory[address][memcnt] += carry;
+                if (memory[address][memcnt] == 2) {
+                    memory[address][memcnt] = 0;
+                    carry = 1;
+                    memcnt--;
+                } else
+                    carry = 0;
+            }
         }
     }
         //if reg[a]==reg[b] go to program adress PC+1+imm. PC is the adress of beq
@@ -227,12 +306,38 @@ void memory_write(int memory[4096][16], instruction step){
         if(imm<0){
             memory[address][9]=1;
             imm=-imm;
+            neg=1;
         }
         memcnt=15;
         while(imm!=0){
             memory[address][memcnt]=imm%2;
             imm/=2;
             memcnt--;
+        }
+        if(neg==1) {
+            memcnt = 15;
+            for(int i=memcnt; i>9; i--){
+                if(memory[address][i]==0)
+                    memory[address][i]=1;
+                else
+                    memory[address][i]=0;
+            }
+            memcnt=15;
+            memory[address][memcnt] += 1;
+            if (memory[address][memcnt] == 2) {
+                memory[address][memcnt] = 0;
+                carry++;
+            }
+            memcnt--;
+            while (carry != 0 && memcnt != 9) {
+                memory[address][memcnt] += carry;
+                if (memory[address][memcnt] == 2) {
+                    memory[address][memcnt] = 0;
+                    carry = 1;
+                    memcnt--;
+                } else
+                    carry = 0;
+            }
         }
     }
     //go to program adress which contains in reg[b]. reg[a]=PC+1.PC is the adress of jalr

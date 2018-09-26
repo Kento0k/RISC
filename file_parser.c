@@ -85,14 +85,14 @@ int parse_file(FILE *in, char *name, int *args) {
     return 1;
 }
 //Количество строк и количество команд
-void text_parameters(FILE* in, int *maxPC, int *num_of_commands){
+void text_parameters(FILE* in, int *maxLine, int *num_of_commands){
     int symbol;
     while(!feof(in)){
         if(fgetc(in)=='\n')
-            *maxPC+=1;
+            *maxLine+=1;
     }
     fseek(in, 0, SEEK_SET);
-    for(int i=0; i<=*maxPC; i++){
+    for(int i=0; i<=*maxLine; i++){
         symbol=fgetc(in);
         if(symbol!='#' && symbol!=' ' &&symbol!='\n')
             *num_of_commands+=1;

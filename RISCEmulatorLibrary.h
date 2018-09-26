@@ -21,10 +21,10 @@ void text_parameters(FILE* in, int *maxPC, int *num_of_commands);
 void memory_write(int memory[65536][16], instruction command);
 
 //program execution
-void exec_program(FILE *in, FILE *out, int *reg, int memory[4096][16]);
+void exec_program(FILE *in, FILE *out, int reg[8][16], int memory[4096][16]);
 
 //program_debugging
-void debug_program(FILE *in, FILE *out, int *reg, int *memory);
+void debug_program(FILE *in, FILE *out, int reg[8][16], int memory[4096][16]);
 //operations
-void run_instruction(instruction step, int*reg, int*memory, int *PC, int maxPC);
+void run_instruction(int reg[8][16], int memory[4096][16], int *PC);
 #endif //RISC_RISCEMULATORLIBRARY_H
