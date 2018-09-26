@@ -1,7 +1,7 @@
 #include"RISCEmulatorLibrary.h"
 #include"instruction.c"
 void exec_program(FILE *in, FILE *out, int *reg, int memory[1024][16]){
-    int maxLine=0, num_of_commands=0, command_count=0, line[1], address=1;
+    int maxLine=0, num_of_commands=0, command_count=0, line[1], address=1, maxPC=1024;
     line[0]=0;
     text_parameters(in, &maxLine, &num_of_commands);
     //Создаем массив команд
