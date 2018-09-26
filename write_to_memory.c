@@ -1,6 +1,6 @@
 #include "RISCEmulatorLibrary.h"
 #include "instruction.c"
-void memory_write(int memory[1024][16], instruction step){
+void memory_write(int memory[4096][16], instruction step){
     int address=step.adress;
     int memcnt;
     //reg[a]= reg[b]+reg[c]

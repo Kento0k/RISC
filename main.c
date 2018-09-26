@@ -3,8 +3,8 @@
 int main(int argc, char *argv[]){
     FILE *in, *out;
     int reg[8][16];
-    int memory[1024][16];
-    for(int i=0; i<1024; i++){
+    int memory[4096][16];
+    for(int i=0; i<4096; i++){
         for(int k=0; k<16; k++)
             memory[i][k]=0;
     }

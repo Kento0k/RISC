@@ -21,7 +21,7 @@ void text_parameters(FILE* in, int *maxPC, int *num_of_commands);
 void memory_write(int memory[65536][16], instruction command);
 
 //program execution
-void exec_program(FILE *in, FILE *out, int *reg, int memory[1024][16]);
+void exec_program(FILE *in, FILE *out, int *reg, int memory[4096][16]);
 
 //program_debugging
 void debug_program(FILE *in, FILE *out, int *reg, int *memory);
