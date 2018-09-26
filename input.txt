@@ -1,6 +1,9 @@
-addI 1,5,-3#@@@@@@@@@@
-add 2 ,1,6
-addi 4,3,4
-jalr 1,4
-add 5,6,1
-addI 6,2 ,15
+ADD 1,2,7
+ADDI 1,2,15
+ADDI 1,2,-15
+NAND 1,2,7
+LUI 1,28
+SW 1,2,15
+LW 1,2,15
+BEQ 1,2,15
+JALR 1,2

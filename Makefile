@@ -2,8 +2,8 @@
 
 all: RISC.exe
 
-RISC.exe : main.o errors.o file_parser.o instruction.o run.o execute.o debug.o
-	gcc -o RISC main.o errors.o file_parser.o instruction.o run.o execute.o debug.o
+RISC.exe : main.o errors.o file_parser.o instruction.o run.o execute.o debug.o write_to_memory.o
+	gcc -o RISC main.o errors.o file_parser.o instruction.o run.o execute.o debug.o write_to_memory.o
 
 main.o : main.c
 	gcc -std=c11 -pedantic -Wall -Wextra -c -o main.o main.c
@@ -25,5 +25,8 @@ debug.o : debug.c
 
 execute.o : execute.c   
 	gcc -std=c11 -pedantic -Wall -Wextra -c -o execute.o execute.c
+
+write_to_memory.o : write_to_memory.c   
+	gcc -std=c11 -pedantic -Wall -Wextra -c -o write_to_memory.o write_to_memory.c
 clean :
 	del *.o
