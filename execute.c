@@ -17,11 +17,6 @@ void exec_program(FILE *in, FILE *out, int reg[8][16], int memory[4096][16]){
         }
         command_count++;
     }
-    for(int i=0; i<10;i++){
-        for(int k=0; k<16; k++)
-            printf("%d", memory[i][k]);
-        printf("\n");
-    }
     //Выполняем программу
     while(PC<=maxPC) {
         run_instruction(reg, memory, &PC);
@@ -38,5 +33,10 @@ void exec_program(FILE *in, FILE *out, int reg[8][16], int memory[4096][16]){
         for(int k=0; k<16; k++)
             fprintf(out, "%d", reg[z][k]);
         fprintf(out, "\n");
+    }
+    for(int i=0; i<20;i++){
+        for(int k=0; k<16; k++)
+            printf("%d", memory[i][k]);
+        printf("\n");
     }
 }

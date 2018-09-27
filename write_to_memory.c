@@ -41,7 +41,7 @@ void memory_write(int memory[4096][16], instruction step){
     else if(strcmp(step.name, "addi")==0){
         if(step.args[0]<0||step.args[0]>7||step.args[1]<0||step.args[1]>7)
             error_processing(100);
-        if(step.args[0]<-63||step.args[0]>63)
+        if(step.args[0]<-64||step.args[0]>63)
             error_processing(110);
         int regA= step.args[0];
         int regB= step.args[1];
@@ -134,6 +134,8 @@ void memory_write(int memory[4096][16], instruction step){
     else if(strcmp(step.name, "lui")==0){
         if(step.args[0]<0||step.args[0]>7)
             error_processing(100);
+        if(step.args[1]<0||step.args[0]>1023)
+            error_processing(110);
         int regA= step.args[0];
         int imm=step.args[1];
         memory[address][0]=0;
@@ -156,10 +158,8 @@ void memory_write(int memory[4096][16], instruction step){
     else if(strcmp(step.name, "sw")==0){
         if(step.args[0]<0||step.args[0]>7||step.args[1]<0||step.args[1]>7)
             error_processing(100);
-        if(step.args[2]<-63||step.args[2]>63)
+        if(step.args[2]<-64||step.args[2]>63)
             error_processing(110);
-        if(step.args[1]+step.args[2]>2047)
-            error_processing(120);
         int regA= step.args[0];
         int regB= step.args[1];
         int imm= step.args[2];

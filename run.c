@@ -1,6 +1,7 @@
 #include "RISCEmulatorLibrary.h"
 #include"instruction.c"
 void run_instruction(int reg[8][16], int memory[4096][16], int *PC){
+    //ADD
     if(memory[*PC][0]==0&&memory[*PC][1]==0&&memory[*PC][2]==0){
         int regA, regB, regC, carry=0;
         regA=memory[*PC][3]*4+memory[*PC][4]*2+memory[*PC][5];
@@ -20,6 +21,7 @@ void run_instruction(int reg[8][16], int memory[4096][16], int *PC){
                 carry=0;
         }
     }
+    //ADDI
     else if(memory[*PC][0]==0&&memory[*PC][1]==0&&memory[*PC][2]==1){
         int regA, regB, carry=0, imm[16]={0};
         regA=memory[*PC][3]*4+memory[*PC][4]*2+memory[*PC][5];
@@ -44,6 +46,7 @@ void run_instruction(int reg[8][16], int memory[4096][16], int *PC){
                 carry=0;
         }
     }
+    //NAND
     else if(memory[*PC][0]==0&&memory[*PC][1]==1&&memory[*PC][2]==0){
         int regA, regB, regC;
         regA=memory[*PC][3]*4+memory[*PC][4]*2+memory[*PC][5];
@@ -56,6 +59,7 @@ void run_instruction(int reg[8][16], int memory[4096][16], int *PC){
                 reg[regA][i]=1;
         }
     }
+    //LUI
     else if(memory[*PC][0]==0&&memory[*PC][1]==1&&memory[*PC][2]==1){
         int regA;
         regA=memory[*PC][3]*4+memory[*PC][4]*2+memory[*PC][5];
@@ -65,15 +69,79 @@ void run_instruction(int reg[8][16], int memory[4096][16], int *PC){
         for(int i=10; i<16;i++)
             reg[regA][i]=0;
     }
+    //SW
     else if(memory[*PC][0]==1&&memory[*PC][1]==0&&memory[*PC][2]==0){
-        printf("SW\n");
+        int regA, regB, carry=0, imm[16]={0}, address[16]={0}, intAddress=0, deg=1;
+        regA=memory[*PC][3]*4+memory[*PC][4]*2+memory[*PC][5];
+        regB=memory[*PC][6]*4+memory[*PC][7]*2+memory[*PC][8];
+        for(int i=15; i>8; i--)
+            imm[i]=memory[*PC][i];
+        if(imm[9]==1) {
+            for (int i=8; i>=0; i--)
+                imm[i]=1;
+        }
+        for(int i=15; i>=0; i--){
+            address[i]=reg[regB][i]+imm[i]+carry;
+            if(address[i]==2){
+                address[i]=0;
+                carry=1;
+            }
+            else if(address[i]==3){
+                address[i]=1;
+                carry=1;
+            }
+            else
+                carry=0;
+        }
+        for(int i=15; i>=0; i--){
+            intAddress+=address[i]*deg;
+            deg*=2;
+        }
+        if(intAddress<0||intAddress>4095)
+            error_processing(120);
+        if(intAddress!=0){
+            for(int i=0; i<16; i++)
+                memory[intAddress][i]=reg[regA][i];
+        }
     }
+    //LW
     else if(memory[*PC][0]==1&&memory[*PC][1]==0&&memory[*PC][2]==1){
-        printf("LW\n");
+        int regA, regB, carry=0, imm[16]={0}, address[16]={0}, intAddress=0, deg=1;
+        regA=memory[*PC][3]*4+memory[*PC][4]*2+memory[*PC][5];
+        regB=memory[*PC][6]*4+memory[*PC][7]*2+memory[*PC][8];
+        for(int i=15; i>8; i--)
+            imm[i]=memory[*PC][i];
+        if(imm[9]==1) {
+            for (int i=8; i>=0; i--)
+                imm[i]=1;
+        }
+        for(int i=15; i>=0; i--){
+            address[i]=reg[regB][i]+imm[i]+carry;
+            if(address[i]==2){
+                address[i]=0;
+                carry=1;
+            }
+            else if(address[i]==3){
+                address[i]=1;
+                carry=1;
+            }
+            else
+                carry=0;
+        }
+        for(int i=15; i>=0; i--){
+            intAddress+=address[i]*deg;
+            deg*=2;
+        }
+        if(intAddress<0||intAddress>4095)
+            error_processing(120);
+        for(int i=0; i<16; i++)
+            reg[regA][i]=memory[intAddress][i];
     }
+    //BEQ
     else if(memory[*PC][0]==1&&memory[*PC][1]==1&&memory[*PC][2]==0){
         printf("BEQ\n");
     }
+    //JALR
     else if(memory[*PC][0]==1&&memory[*PC][1]==1&&memory[*PC][2]==1){
         printf("JALR\n");
     }
