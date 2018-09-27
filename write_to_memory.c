@@ -47,7 +47,7 @@ void memory_write(int memory[4096][16], instruction step){
         //Проверяем и записываем в биты памяти регистры в двоичной системе счисления
         if(step.args[0]<0||step.args[0]>7||step.args[1]<0||step.args[1]>7)
             error_processing(100);
-        if(step.args[0]<-64||step.args[0]>63)
+        if(step.args[2]<-64||step.args[2]>63)
             error_processing(110);
         int regA= step.args[0];
         int regB= step.args[1];
@@ -144,7 +144,7 @@ void memory_write(int memory[4096][16], instruction step){
         //Проверяем аргументы, переводим в двоичную систему, записываем в соответствующие биты памяти
         if(step.args[0]<0||step.args[0]>7)
             error_processing(100);
-        if(step.args[1]<0||step.args[0]>1023)
+        if(step.args[1]<0||step.args[1]>1023)
             error_processing(110);
         int regA= step.args[0];
         int imm=step.args[1];
@@ -234,8 +234,6 @@ void memory_write(int memory[4096][16], instruction step){
             error_processing(100);
         if(step.args[2]<-64||step.args[2]>63)
             error_processing(110);
-        if(step.args[1]+step.args[2]>2047)
-            error_processing(120);
         int regA= step.args[0];
         int regB= step.args[1];
         int imm= step.args[2];
