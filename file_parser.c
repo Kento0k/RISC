@@ -54,8 +54,8 @@ int parse_file(FILE *in, char *name, int *args) {
     char *oper=strtok(str, " ,");
     strcpy(name, oper);
     for(int i=0; i<9; i++){
-       if (strcmp(name, command[i])==0)
-           flag=1;
+        if (strcmp(name, command[i])==0)
+            flag=1;
     }
     if(flag==0)
         error_processing(70);
@@ -97,10 +97,7 @@ void text_parameters(FILE* in, int *maxLine, int *num_of_commands){
         if(symbol!='#' && symbol!=' ' &&symbol!='\n')
             *num_of_commands+=1;
         while(symbol!='\n' && symbol!=EOF)
-                symbol=fgetc(in);
+            symbol=fgetc(in);
     }
     fseek(in, 0, SEEK_SET);
 }
-
-
-
