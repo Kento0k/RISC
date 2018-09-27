@@ -1,6 +1,6 @@
 #include "RISCEmulatorLibrary.h"
 #include"instruction.c"
-void run_instruction(int reg[8][16], int memory[4096][16], int *PC) {
+void run_instruction(int reg[8][16], int memory[4096][16], int *PC, int *maxAcessAdress) {
     //ADD
     if (memory[*PC][0] == 0 && memory[*PC][1] == 0 && memory[*PC][2] == 0) {
         int regA, regB, regC, carry = 0;
@@ -20,6 +20,7 @@ void run_instruction(int reg[8][16], int memory[4096][16], int *PC) {
                     carry = 0;
             }
         }
+        *PC+=1;
     }
         //ADDI
     else if (memory[*PC][0] == 0 && memory[*PC][1] == 0 && memory[*PC][2] == 1) {
@@ -45,6 +46,7 @@ void run_instruction(int reg[8][16], int memory[4096][16], int *PC) {
                     carry = 0;
             }
         }
+        *PC+=1;
     }
         //NAND
     else if (memory[*PC][0] == 0 && memory[*PC][1] == 1 && memory[*PC][2] == 0) {
@@ -60,6 +62,7 @@ void run_instruction(int reg[8][16], int memory[4096][16], int *PC) {
                     reg[regA][i] = 1;
             }
         }
+        *PC+=1;
     }
         //LUI
     else if (memory[*PC][0] == 0 && memory[*PC][1] == 1 && memory[*PC][2] == 1) {
@@ -72,6 +75,7 @@ void run_instruction(int reg[8][16], int memory[4096][16], int *PC) {
             for (int i = 10; i < 16; i++)
                 reg[regA][i] = 0;
         }
+        *PC+=1;
     }
         //SW
     else if (memory[*PC][0] == 1 && memory[*PC][1] == 0 && memory[*PC][2] == 0) {
@@ -101,10 +105,13 @@ void run_instruction(int reg[8][16], int memory[4096][16], int *PC) {
         }
         if (intAddress > 4095)
             error_processing(120);
+        if(intAddress>*maxAcessAdress)
+            *maxAcessAdress=intAddress;
         if (intAddress != 0) {
             for (int i = 0; i < 16; i++)
                 memory[intAddress][i] = reg[regA][i];
         }
+        *PC+=1;
     }
         //LW
     else if (memory[*PC][0] == 1 && memory[*PC][1] == 0 && memory[*PC][2] == 1) {
@@ -135,9 +142,12 @@ void run_instruction(int reg[8][16], int memory[4096][16], int *PC) {
             }
             if (intAddress > 4095)
                 error_processing(120);
+            if(intAddress>*maxAcessAdress)
+                *maxAcessAdress=intAddress;
             for (int i = 0; i < 16; i++)
                 reg[regA][i] = memory[intAddress][i];
         }
+        *PC+=1;
     }
         //BEQ
     else if (memory[*PC][0] == 1 && memory[*PC][1] == 1 && memory[*PC][2] == 0) {
@@ -177,9 +187,13 @@ void run_instruction(int reg[8][16], int memory[4096][16], int *PC) {
                 intAddress += address[i] * deg;
                 deg *= 2;
             }
-            if (intAddress > 4095)
+            if (intAddress+1 > 4095)
                 error_processing(120);
-            *PC = intAddress;
+            if(intAddress+1>*maxAcessAdress)
+                *maxAcessAdress=intAddress+1;
+            *PC = intAddress+1;
+            if(*PC==0)
+                *PC+=1;
         }
     }
         //JALR
@@ -191,20 +205,25 @@ void run_instruction(int reg[8][16], int memory[4096][16], int *PC) {
             address += reg[regB][i] * deg;
             deg *= 2;
         }
-        address--;
         if (address > 4094)
             error_processing(120);
+        if(address>*maxAcessAdress)
+            *maxAcessAdress=address;
         *PC = address;
-        if(regA!=0) {
-            while (jalrAddress != 0) {
-                reg[regA][cnt] = jalrAddress % 2;
-                jalrAddress /= 2;
-                cnt--;
+        if(regA!=0||regB!=0) {
+            if (regA != 0) {
+                while (jalrAddress != 0) {
+                    reg[regA][cnt] = jalrAddress % 2;
+                    jalrAddress /= 2;
+                    cnt--;
+                }
+                while (cnt >= 0) {
+                    reg[regA][cnt] = 0;
+                    cnt--;
+                }
             }
-            while (cnt >= 0) {
-                reg[regA][cnt] = 0;
-                cnt--;
-            }
+            if(*PC==0)
+                *PC+=1;
         }
     }
 }

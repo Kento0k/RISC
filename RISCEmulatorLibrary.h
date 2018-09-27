@@ -26,5 +26,5 @@ void exec_program(FILE *in, FILE *out, int reg[8][16], int memory[4096][16]);
 //program_debugging
 void debug_program(FILE *in, FILE *out, int reg[8][16], int memory[4096][16]);
 //operations
-void run_instruction(int reg[8][16], int memory[4096][16], int *PC);
+void run_instruction(int reg[8][16], int memory[4096][16], int *PC, int *maxAcessAdress);
 #endif //RISC_RISCEMULATORLIBRARY_H

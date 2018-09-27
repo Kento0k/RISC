@@ -1,8 +1,7 @@
 #include"RISCEmulatorLibrary.h"
 #include"instruction.c"
 void exec_program(FILE *in, FILE *out, int reg[8][16], int memory[4096][16]){
-    int maxLine=0, num_of_commands=0, command_count=0, line[1], address=1, PC=1, maxPC=4096;
-    line[0]=0;
+    int maxLine=0, num_of_commands=0, command_count=0, address=1, PC=1, maxPC=4096, maxAcessAdress=0;
     text_parameters(in, &maxLine, &num_of_commands);
     //Создаем массив команд
     instruction *program= (instruction*)malloc(num_of_commands * sizeof(instruction));
@@ -14,13 +13,13 @@ void exec_program(FILE *in, FILE *out, int reg[8][16], int memory[4096][16]){
             program[command_count].adress = address;
             memory_write(memory, program[command_count]);
             address++;
+            maxAcessAdress++;
         }
         command_count++;
     }
     //Выполняем программу
     while(PC<=maxPC&&PC!=0) {
-        run_instruction(reg, memory, &PC);
-        PC++;
+        run_instruction(reg, memory, &PC, &maxAcessAdress);
     }
     for (int z = 0; z < 8; z++) {
         printf("register[%d]=  ", z);
@@ -34,7 +33,7 @@ void exec_program(FILE *in, FILE *out, int reg[8][16], int memory[4096][16]){
             fprintf(out, "%d", reg[z][k]);
         fprintf(out, "\n");
     }
-    for(int i=0; i<20;i++){
+    for(int i=0; i<=maxAcessAdress;i++){
         for(int k=0; k<16; k++)
             printf("%d", memory[i][k]);
         printf("\n");
