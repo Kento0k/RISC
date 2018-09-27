@@ -23,6 +23,7 @@ void exec_program(FILE *in, FILE *out, int reg[8][16], int memory[4096][16]){
         run_instruction(reg, memory, &PC, &maxAcessAdress);
     }
     //Печатаем содержимое памяти и регистров в выходной файл
+    fprintf(out, "Registers:\n");
     for (int z = 0; z < 8; z++) {
         fprintf(out, "register[%d]=  ", z);
         for(int k=0; k<16; k++)

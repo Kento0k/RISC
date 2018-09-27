@@ -52,7 +52,7 @@ void debug_program(FILE *in, FILE *out, int reg[8][16], int memory[4096][16]){
             while(PC<=maxPC&&PC!=0){
                 run_instruction(reg, memory, &PC, &maxAcessAdress);
                 //Выводим содержимое регистров и памяти на экран
-                printf("Кegisters:\n");
+                printf("Registers:\n");
                 for (int z = 0; z < 8; z++) {
                     printf("register[%d]=  ", z);
                     for(int k=0; k<16; k++)
@@ -71,6 +71,7 @@ void debug_program(FILE *in, FILE *out, int reg[8][16], int memory[4096][16]){
         }
     }
     //Выводим содержимое регистров и памяти в выходной файл
+    fprintf(out, "Registers:\n");
     for (int z = 0; z < 8; z++) {
         fprintf(out, "register[%d]=  ", z);
         for(int k=0; k<16; k++)
