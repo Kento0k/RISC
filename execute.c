@@ -28,9 +28,15 @@ void exec_program(FILE *in, FILE *out, int reg[8][16], int memory[4096][16]){
         PC++;
     }
     for (int z = 0; z < 8; z++) {
-        printf("register[%d]= %d \n", z, reg[z]);
+        printf("register[%d]=  ", z);
+        for(int k=0; k<16; k++)
+            printf("%d", reg[z][k]);
+        printf("\n");
     }
     for (int z = 0; z < 8; z++) {
-        fprintf(out, "register[%d]= %d\n", z, reg[z]);
+        fprintf(out, "register[%d]=  ", z);
+        for(int k=0; k<16; k++)
+            fprintf(out, "%d", reg[z][k]);
+        fprintf(out, "\n");
     }
 }
