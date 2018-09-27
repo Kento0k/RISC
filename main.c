@@ -25,9 +25,9 @@ int main(int argc, char *argv[]){
         printf("# Print '[debug]' key if you want to enter to debug mode   #\n");
         printf("#                                                          #\n");
         printf("# Example of an input file:                                #\n");
-        printf("# SW R1 R2 15                                              #\n");
-        printf("# ADD R3 R5 R7                                             #\n");
-        printf("# ADDI R4 R2 23                                            #\n");
+        printf("# SW R1,R2,15                                              #\n");
+        printf("# ADD R3,R5,R7                                             #\n");
+        printf("# ADDI R4,R2,23                                            #\n");
         printf("#                                                          #\n");
         printf("############################################################\n\n");
         error_processing(10);

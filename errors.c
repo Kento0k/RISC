@@ -41,6 +41,9 @@ void error_processing(int code){
    else if (code==130){
        printf("Out of bounds adress\n");
    }
+   else if (code==140){
+       printf("File is empty\n");
+   }
    printf("Press any button...\n");
    getchar();
    exit(code);
