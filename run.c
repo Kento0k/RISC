@@ -139,7 +139,47 @@ void run_instruction(int reg[8][16], int memory[4096][16], int *PC){
     }
     //BEQ
     else if(memory[*PC][0]==1&&memory[*PC][1]==1&&memory[*PC][2]==0){
-        printf("BEQ\n");
+        int regA, regB, carry=0, imm[16]={0}, address[16]={0}, intAddress=*PC, deg=1, cnt=15, isEqual=1;
+        regA=memory[*PC][3]*4+memory[*PC][4]*2+memory[*PC][5];
+        regB=memory[*PC][6]*4+memory[*PC][7]*2+memory[*PC][8];
+        for(int i=0; i<16; i++){
+            if(reg[regA][i]!=reg[regB][i]) {
+                isEqual = 0;
+                printf("notEqual\n");
+                break;
+            }
+        }
+        if(isEqual==1) {
+            for (int i = 15; i > 8; i--)
+                imm[i] = memory[*PC][i];
+            if (imm[9] == 1) {
+                for (int i = 8; i >= 0; i--)
+                    imm[i] = 1;
+            }
+            while (intAddress != 0) {
+                address[cnt] = intAddress % 2;
+                intAddress /= 2;
+                cnt--;
+            }
+            for (int i = 15; i >= 0; i--) {
+                address[i] = address[i] + imm[i] + carry;
+                if (address[i] == 2) {
+                    address[i] = 0;
+                    carry = 1;
+                } else if (address[i] == 3) {
+                    address[i] = 1;
+                    carry = 1;
+                } else
+                    carry = 0;
+            }
+            for (int i = 15; i >= 0; i--) {
+                intAddress += address[i] * deg;
+                deg *= 2;
+            }
+            if(intAddress<0||intAddress>4095)
+                error_processing(120);
+            *PC=intAddress;
+        }
     }
     //JALR
     else if(memory[*PC][0]==1&&memory[*PC][1]==1&&memory[*PC][2]==1){
