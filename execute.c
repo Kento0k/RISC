@@ -18,7 +18,7 @@ void exec_program(FILE *in, FILE *out, int reg[8][16], int memory[4096][16]){
         command_count++;
     }
     //Выполняем программу
-    while(PC<=maxPC) {
+    while(PC<=maxPC&&PC!=0) {
         run_instruction(reg, memory, &PC);
         PC++;
     }

@@ -1,6 +1,6 @@
 #include"RISCEmulatorLibrary.h"
 #include"instruction.c"
-void debug_program(FILE *in, FILE *out, int *reg, int *memory){
+void debug_program(FILE *in, FILE *out, int reg[8][16], int memory[4096][16]){
     printf("Debug mode.\nPrint '1' to do the next step.\nPrint'2'to run to the end\n");
     int maxPC=0, num_of_commands=0, command_count=0, PC[1];
     char command[20];
