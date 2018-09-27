@@ -22,7 +22,6 @@ void debug_program(FILE *in, FILE *out, int reg[8][16], int memory[4096][16]){
     }
     //Пока не дошли до конца программы
     while(PC<=maxPC&&PC!=0) {
-        printf("in\n");
         scanf("%s", command);
         if (strcmp("1", command) != 0 && strcmp("2", command) != 0) {
             printf("Wrong command\n");
